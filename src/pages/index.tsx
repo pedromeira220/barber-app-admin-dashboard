@@ -4,8 +4,8 @@
 
 export default function Home() {
   return (
-    <main>
-      <h1>Primeiro arquivo</h1>
+    <main className="flex h-screen items-center justify-center">
+      <h1 className="">Primeiro arquivo</h1>
     </main>
   )
 }
