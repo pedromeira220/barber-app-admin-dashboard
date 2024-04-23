@@ -44,7 +44,8 @@ export default function Barbearias() {
                 <TableHead>Nome da barbearia</TableHead>
                 <TableHead>Nome para contato</TableHead>
                 <TableHead>Endereço de email</TableHead>
-                <TableHead>Telefone</TableHead>
+                <TableHead>Telefone para contato</TableHead>
+                <TableHead>Ações</TableHead>
               </TableRow>
             </TableHeader>
 
