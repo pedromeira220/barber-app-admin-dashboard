@@ -2,15 +2,14 @@ import { Sidebar } from '@/components/sidebar'
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
 import { getBarbershops } from '@/api/get-barbershops'
 import { useQuery } from '@tanstack/react-query'
-import Image from 'next/image'
 import React from 'react'
+import { BarbershopTableRow } from './barbershop-table-row'
 
 export default function Barbearias() {
   const fetchBarbershops = async () => {
@@ -53,21 +52,10 @@ export default function Barbearias() {
               {result &&
                 result.barbershops.map((barbershop) => {
                   return (
-                    <TableRow key={barbershop.id}>
-                      <TableCell className="flex items-center gap-3">
-                        <Image
-                          alt="Foto do logo da barbearia"
-                          src="https://i.pinimg.com/736x/ff/39/14/ff3914853f62ef394f7b8821bab37f6b.jpg"
-                          width={32}
-                          height={32}
-                          className="h-8 w-8 rounded-full"
-                        />
-                        <span>{barbershop.name}</span>
-                      </TableCell>
-                      <TableCell>{barbershop.contactName}</TableCell>
-                      <TableCell>{barbershop.email}</TableCell>
-                      <TableCell>{barbershop.contactPhone}</TableCell>
-                    </TableRow>
+                    <BarbershopTableRow
+                      barbershop={barbershop}
+                      key={barbershop.id}
+                    />
                   )
                 })}
             </TableBody>
