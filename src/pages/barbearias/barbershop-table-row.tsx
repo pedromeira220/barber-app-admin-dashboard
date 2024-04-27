@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { DialogUpdateBarbershop } from './dialog-update-barbershop'
+import { Loader2 } from 'lucide-react'
 
 interface BarbershopTableRowProps {
   barbershop: Barbershop
@@ -20,7 +21,10 @@ export const BarbershopTableRow: React.FC<BarbershopTableRowProps> = ({
   const [isUpdateBarbershopDialogOpen, setIsUpdateBarbershopDialogOpen] =
     useState(false)
 
-  const { mutateAsync: deleteBarbershopFn } = useMutation({
+  const {
+    mutateAsync: deleteBarbershopFn,
+    isPending: deleteBarbershopIsPending,
+  } = useMutation({
     mutationFn: deleteBarbershop,
   })
 
@@ -43,6 +47,7 @@ export const BarbershopTableRow: React.FC<BarbershopTableRowProps> = ({
       <TableCell>{barbershop.contactPhone}</TableCell>
       <TableCell className="flex gap-3">
         <Button
+          disabled={deleteBarbershopIsPending}
           variant="secondary"
           onClick={() => {
             if (
@@ -52,15 +57,19 @@ export const BarbershopTableRow: React.FC<BarbershopTableRowProps> = ({
             ) {
               deleteBarbershopFn({
                 barbershopId: barbershop.id,
-              })
-
-              queryClient.invalidateQueries({
-                queryKey: ['barbershops'],
+              }).then(() => {
+                queryClient.invalidateQueries({
+                  queryKey: ['barbershops'],
+                })
               })
             }
           }}
         >
-          Deletar
+          {deleteBarbershopIsPending ? (
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          ) : (
+            <>Deletar</>
+          )}
         </Button>
         <Dialog
           open={isUpdateBarbershopDialogOpen}
